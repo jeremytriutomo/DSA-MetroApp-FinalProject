@@ -4,96 +4,104 @@
 #include "metroClass.h"
 using namespace std;
 
-#include <iostream>
-#include <iomanip> // For setw
-#include <string>
-using namespace std;
-
-// Define the Event structure
-class Event
+int main()
 {
-public:
-    string origin;        // Origin station of the transportation route
-    string destination;   // Destination station of the transportation route
-    double distanceKm;    // Distance between origin and destination in kilometers
-    string arrivalTime;   // Time when the transportation route arrives at the destination
-    string departureTime; // Time when the transportation route departs from the origin
-    string route;         // Route or line identifier of the transportation route
-    Event *next;          // Pointer to the next Event in the linked list
-};
+    // Initialize an empty linked list of events
+    Event *schedule = nullptr;
 
-// Function to display the schedule in tabular format.
-void displaySchedule(Event *head)
-{
-    // Create a pointer 'current' to traverse the linked list starting from the head
-    Event *current = head;
+    // Add events to the schedule (customize as needed)
+    // Loop 1
+    addEvent(schedule, "Khaenri'ah", "Liyue", 8, "10:40:00 AM", "10:45:00 AM", "Blue Line");
+    addEvent(schedule, "Liyue", "Snezhnaya", 9, "11:30:00 AM", "11:35:00 AM", "Blue Line\n");
 
-    // Display header for the schedule table with setw for column alignment
-    cout << left << setw(15) << "Origin" << setw(15) << "Destination"
-         << setw(15) << "Distance(km)" << setw(15) << "Arrival Time"
-         << setw(15) << "Departure Time" << setw(15) << "Route" << endl;
+    addEvent(schedule, "Snezhnaya", "Liyue", 9, "10:45:00 AM", "10:50:00 AM", "Blue Line");
+    addEvent(schedule, "Liyue", "Khaenri'ah", 8, "11:30:00 AM", "11:35:00 AM", "Blue Line\n");
 
-    // Display a horizontal line as a separator
-    cout << string(90, '-') << endl;
+    addEvent(schedule, "Inazuma", "Liyue", 9, "10:45:00 AM", "10:50:00 AM", "Green Line");
+    addEvent(schedule, "Liyue", "Celestia", 9, "11:35:00 AM", "11:40:00 AM", "Green Line");
+    addEvent(schedule, "Celestia", "Fontaine", 9, "12:25:00 PM", "12:30:00 PM", "Green Line\n");
 
-    // Traverse the linked list and display each node's information
-    while (current != nullptr)
-    {
-        // Output each attribute of the current node with setw for column alignment
-        cout << setw(15) << current->origin << setw(15) << current->destination
-             << setw(15) << current->distanceKm << setw(15) << current->arrivalTime
-             << setw(15) << current->departureTime << setw(15) << current->route << endl;
+    addEvent(schedule, "Fontaine", "Celestia", 9, "10:45:00 AM", "10:50:00 AM", "Green Line");
+    addEvent(schedule, "Celestia", "Liyue", 9, "11:35:00 AM", "11:40:00 AM", "Green Line");
+    addEvent(schedule, "Liyue", "Inazuma", 9, "12:25:00 PM", "12:30:00 PM", "Green Line\n");
 
-        // Move to the next node in the linked list
-        current = current->next;
-    }
-}
+    addEvent(schedule, "Sumeru", "Celestia", 12, "11:00:00 AM", "11:05:00 AM", "Purple Line");
+    addEvent(schedule, "Celestia", "Mondstadt", 5, "11:30:00 AM", "11:35:00 AM", "Purple Line");
+    addEvent(schedule, "Mondstadt", "Khaenri'ah", 10, "12:25:00 PM", "12:30:00 PM", "Purple Line\n");
 
-// Function to add a new event to the schedule
-void addEvent(Event *&head, const string &origin, const string &destination,
-              double distanceKm, const string &arrivalTime, const string &departureTime,
-              const string &route)
-{
-    // Create a new event
-    Event *newEvent = new Event;             // Allocate memory for a new Event object
-    newEvent->origin = origin;               // Set the origin attribute of the new event
-    newEvent->destination = destination;     // Set the destination attribute of the new event
-    newEvent->distanceKm = distanceKm;       // Set the distanceKm attribute of the new event
-    newEvent->arrivalTime = arrivalTime;     // Set the arrivalTime attribute of the new event
-    newEvent->departureTime = departureTime; // Set the departureTime attribute of the new event
-    newEvent->route = route;                 // Set the route attribute of the new event
-    newEvent->next = nullptr;                // Set the next pointer of the new event to nullptr
+    addEvent(schedule, "Khaenri'ah", "Mondstadt", 10, "10:50:00 AM", "10:55:00 AM", "Purple Line");
+    addEvent(schedule, "Mondstadt", "Celestia", 5, "11:20:00 AM", "11:25:00 AM", "Purple Line");
+    addEvent(schedule, "Celestia", "Sumeru", 12, "12:25:00 PM", "12:30:00 PM", "Purple Line\n");
 
-    // If the list is empty, make the new event the head
-    if (head == nullptr)
-    {
-        head = newEvent;
-    }
-    else
-    {
-        // Otherwise, find the last event and link the new event
-        Event *current = head; // Start from the head of the linked list
-        while (current->next != nullptr)
-        {
-            current = current->next; // Move to the next event in the linked list
-        }
-        current->next = newEvent; // Link the new event to the last event in the linked list
-    }
-}
+    addEvent(schedule, "Natlan", "Mondstadt", 10, "10:50:00 AM", "10:55:00 AM", "Red Line");
+    addEvent(schedule, "Mondstadt", "Liyue", 9, "11:40:00 AM", "11:45:00 AM", "Red Line");
+    addEvent(schedule, "Liyue", "Sumeru", 9, "12:30:00 PM", "12:35:00 PM", "Red Line\n");
 
-// Function to delete the entire schedule and free memory
-void deleteSchedule(Event *&head)
-{
-    // While there are still events in the linked list
-    while (head != nullptr)
-    {
-        // Create a temporary pointer to the current head
-        Event *temp = head;
+    addEvent(schedule, "Sumeru", "Liyue", 9, "10:45:00 AM", "10:50:00 AM", "Red Line");
+    addEvent(schedule, "Liyue", "Mondstadt", 9, "11:35:00 AM", "11:40:00 AM", "Red Line");
+    addEvent(schedule, "Mondstadt", "Natlan", 10, "12:30:00 PM", "12:35:00 PM", "Red Line\n");
 
-        // Move the head to the next event in the linked list
-        head = head->next;
+    addEvent(schedule, "Fontaine", "Natlan", 14, "11:10:00 AM", "11:15:00 AM", "Orange Line");
+    addEvent(schedule, "Natlan", "Khaenri'ah", 18, "12:45:00 PM", "12:50:00 PM", "Orange Line");
+    addEvent(schedule, "Khaenri'ah", "Inazuma", 12, "13:50:00 PM", "13:55:00 PM", "Orange Line");
+    addEvent(schedule, "Inazuma", "Snezhnaya", 6, "14:25:00 PM", "14:30:00 PM", "Orange Line");
+    addEvent(schedule, "Snezhnaya", "Sumeru", 8, "15:10:00 PM", "15:15:00 PM", "Orange Line\n");
 
-        // Delete the event pointed to by the temporary pointer
-        delete temp;
-    }
+    addEvent(schedule, "Sumeru", "Snezhnaya", 8, "10:40:00 AM", "10:45:00 AM", "Orange Line");
+    addEvent(schedule, "Snezhnaya", "Inazuma", 6, "11:15:00 AM", "11:20:00 AM", "Orange Line");
+    addEvent(schedule, "Inazuma", "Khaenri'ah", 12, "12:20:00 PM", "12:25:00 PM", "Orange Line");
+    addEvent(schedule, "Khaenri'ah", "Natlan", 18, "13:55:00 PM", "14:00:00 PM", "Orange Line");
+    addEvent(schedule, "Natlan", "Fontaine", 14, "15:10:00 PM", "15:15:00 PM", "Orange Line\n");
+
+    // Loop 2
+    addEvent(schedule, "Khaenri'ah", "Liyue", 8, "12:15:00 PM", "12:20:00 PM", "Blue Line");
+    addEvent(schedule, "Liyue", "Snezhnaya", 9, "13:05:00 PM", "13:10:00 PM", "Blue Line\n");
+
+    addEvent(schedule, "Snezhnaya", "Liyue", 9, "12:20:00 PM", "12:25:00 PM", "Blue Line");
+    addEvent(schedule, "Liyue", "Khaenri'ah", 8, "13:05:00 AM", "13:10:00 AM", "Blue Line\n");
+
+    addEvent(schedule, "Inazuma", "Liyue", 9, "13:15:00 PM", "13:20:00 PM", "Green Line");
+    addEvent(schedule, "Liyue", "Celestia", 9, "14:05:00 PM", "14:10:00 PM", "Green Line");
+    addEvent(schedule, "Celestia", "Fontaine", 9, "14:55:00 PM", "15:00:00 PM", "Green Line\n");
+
+    addEvent(schedule, "Fontaine", "Celestia", 9, "13:15:00 PM", "13:20:00 PM", "Green Line");
+    addEvent(schedule, "Celestia", "Liyue", 9, "14:05:00 PM", "14:10:00 PM", "Green Line");
+    addEvent(schedule, "Liyue", "Inazuma", 9, "14:55:00 PM", "15:00:00 PM", "Green Line\n");
+
+    addEvent(schedule, "Sumeru", "Celestia", 12, "13:30:00 PM", "13:35:00 PM", "Purple Line");
+    addEvent(schedule, "Celestia", "Mondstadt", 5, "14:00:00 AM", "14:05:00 AM", "Purple Line");
+    addEvent(schedule, "Mondstadt", "Khaenri'ah", 10, "14:55:00 PM", "15:00:00 PM", "Purple Line\n");
+
+    addEvent(schedule, "Khaenri'ah", "Mondstadt", 10, "13:20:00 PM", "13:25:00 PM", "Purple Line");
+    addEvent(schedule, "Mondstadt", "Celestia", 5, "13:50:00 PM", "13:55:00 PM", "Purple Line");
+    addEvent(schedule, "Celestia", "Sumeru", 12, "14:55:00 PM", "15:00:00 PM", "Purple Line\n");
+
+    addEvent(schedule, "Natlan", "Mondstadt", 10, "13:25:00 PM", "13:30:00 PM", "Red Line");
+    addEvent(schedule, "Mondstadt", "Liyue", 9, "14:15:00 PM", "14:20:00 PM", "Red Line");
+    addEvent(schedule, "Liyue", "Sumeru", 9, "15:05:00 PM", "15:10:00 PM", "Red Line\n");
+
+    addEvent(schedule, "Sumeru", "Liyue", 9, "13:20:00 PM", "13:25:00 PM", "Red Line");
+    addEvent(schedule, "Liyue", "Mondstadt", 9, "14:10:00 AM", "14:15:00 AM", "Red Line");
+    addEvent(schedule, "Mondstadt", "Natlan", 10, "15:05:00 PM", "15:10:00 PM", "Red Line\n");
+
+    addEvent(schedule, "Fontaine", "Natlan", 14, "16:25:00 PM", "16:30:00 PM", "Orange Line");
+    addEvent(schedule, "Natlan", "Khaenri'ah", 18, "18:00:00 PM", "18:05:00 PM", "Orange Line");
+    addEvent(schedule, "Khaenri'ah", "Inazuma", 12, "19:05:00 PM", "19:10:00 PM", "Orange Line");
+    addEvent(schedule, "Inazuma", "Snezhnaya", 6, "19:40:00 PM", "19:45:00 PM", "Orange Line");
+    addEvent(schedule, "Snezhnaya", "Sumeru", 8, "20:25:00 PM", "20:30:00 PM", "Orange Line\n");
+
+    addEvent(schedule, "Sumeru", "Snezhnaya", 8, "15:55:00 PM", "16:00:00 PM", "Orange Line");
+    addEvent(schedule, "Snezhnaya", "Inazuma", 6, "16:30:00 PM", "16:35:00 PM", "Orange Line");
+    addEvent(schedule, "Inazuma", "Khaenri'ah", 12, "17:35:00 PM", "17:40:00 PM", "Orange Line");
+    addEvent(schedule, "Khaenri'ah", "Natlan", 18, "19:10:00 PM", "19:15:00 PM", "Orange Line");
+    addEvent(schedule, "Natlan", "Fontaine", 14, "20:25:00 PM", "20:30:00 PM", "Orange Line\n");
+
+    // Display the schedule
+    cout << "Schedule:" << endl;
+    displaySchedule(schedule);
+
+    // Delete the schedule and free memory
+    deleteSchedule(schedule);
+
+    return 0;
 }

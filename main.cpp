@@ -96,12 +96,45 @@ int main()
     addEvent(schedule, "Khaenri'ah", "Natlan", 18, "19:10:00 PM", "19:15:00 PM", "Orange Line");
     addEvent(schedule, "Natlan", "Fontaine", 14, "20:25:00 PM", "20:30:00 PM", "Orange Line\n");
 
-    // Display the schedule
-    cout << "Schedule:" << endl;
-    displaySchedule(schedule);
+    cout << " =====================================================================================";
+    cout << "\n || * *   * *   ******   *******   *****    *******         *       *****    *****  ||";
+    cout << "\n || *  * *  *   *           *      *    *   *     *        * *      *    *   *    * ||";
+    cout << "\n || *   *   *   ******      *      *****    *     *       *****     *****    *****  ||";
+    cout << "\n || *       *   *           *      *  *     *     *      *     *    *        *      ||";
+    cout << "\n || *       *   ******      *      *   *    *******     *       *   *        *      ||";
+    cout << "\n =====================================================================================";
+    cout << "\n\n";
 
-    // Delete the schedule and free memory
-    deleteSchedule(schedule);
+    cout << "Welcome to our Metro app!";
+
+    while (1)
+    {
+        int action;
+
+        cout << "\n[1] View Train Schedule \n[2] Find Fastest Route\n\nInsert number for action: ";
+        cin >> action;
+
+        if (action == 1)
+        {
+            // Display the schedule
+            cout << "Schedule:" << endl;
+            displaySchedule(schedule);
+
+            // Delete the schedule and free memory
+            deleteSchedule(schedule);
+        }
+        else if (action == 2)
+        {
+            //...
+        }
+        else
+        {
+            cout << "\nInput unrecognized";
+            continue;
+        }
+    }
+
+    return 0;
 
     return 0;
 }
