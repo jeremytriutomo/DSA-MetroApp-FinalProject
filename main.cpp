@@ -2,10 +2,17 @@
 #include <iomanip> // For setw
 #include <string>
 #include "metroClass.h"
+#include <vector>
+#include <queue>
+#include <limits>
+#include "Graph.h"
 using namespace std;
 
 int main()
 {
+    //=============================================================================================================================//
+    //                                  CODES FOR THE SCHEDULE STARTS HERE                                                         //
+    //=============================================================================================================================//
     // Initialize an empty linked list of events
     Event *schedule = nullptr;
 
@@ -96,6 +103,44 @@ int main()
     addEvent(schedule, "Khaenri'ah", "Natlan", 18, "19:10:00 PM", "19:15:00 PM", "Orange Line");
     addEvent(schedule, "Natlan", "Fontaine", 14, "20:25:00 PM", "20:30:00 PM", "Orange Line\n");
 
+    //=============================================================================================================================//
+    //                                  CODES FOR THE SCHEDULE ENDS HERE                                                           //
+    //=============================================================================================================================//
+
+    //=============================================================================================================================//
+    //                                  CODES FOR THE PATH FINDER STARTS HERE                                                      //
+    //=============================================================================================================================//
+
+    // Number of Vertices Definition
+    int vertices = 9;
+    Graph graph(vertices);
+
+    // Add edges with distances
+    graph.addEdge(0, 1, 8); // Khaerin'ah to Liyue, distance: 8
+    graph.addEdge(0, 3, 12);
+    graph.addEdge(0, 7, 10);
+    graph.addEdge(0, 8, 18);
+
+    graph.addEdge(1, 2, 9);
+    graph.addEdge(1, 4, 9);
+    graph.addEdge(1, 7, 9);
+    graph.addEdge(1, 3, 12);
+    graph.addEdge(1, 6, 9);
+
+    graph.addEdge(2, 3, 6);
+    graph.addEdge(2, 6, 6);
+
+    graph.addEdge(4, 5, 9);
+    graph.addEdge(4, 6, 12);
+    graph.addEdge(4, 7, 5);
+
+    graph.addEdge(5, 8, 14);
+    graph.addEdge(7, 8, 10);
+
+    //=============================================================================================================================//
+    //                                  CODES FOR THE PATH FINDER ENDS HERE                                                        //
+    //=============================================================================================================================//
+
     cout << " =====================================================================================";
     cout << "\n || * *   * *   ******   *******   *****    *******         *       *****    *****  ||";
     cout << "\n || *  * *  *   *           *      *    *   *     *        * *      *    *   *    * ||";
@@ -126,94 +171,49 @@ int main()
         }
         else if (action == 2)
         {
-            //...
+            // Prompting user into putting their location
+            int startNode;
+            cout << "\n||==============================================||";
+            cout << "\n||0||Khaenri'ah Station                         ||";
+            cout << "\n||1||Liyue Station                              ||";
+            cout << "\n||2||Snezhnaya Station                          ||";
+            cout << "\n||3||Inazuma Station                            ||";
+            cout << "\n||4||Celestia Station                           ||";
+            cout << "\n||5||Fontain Station                            ||";
+            cout << "\n||6||Sumeru Station                             ||";
+            cout << "\n||7||Mondstadt Station                          ||";
+            cout << "\n||8||Natlan Station                             ||";
+            cout << "\n||==============================================||\n";
+
+            cout << "I'm at station number: ";
+            cin >> startNode;
+
+            // Choose the starting node
+            vector<int> parent = graph.getShortestPathTree(startNode);
+
+            // Giving the dijkstra result in terms of parent and child form
+            // cout << "Shortest Path Tree from node " << startNode << ":\n";
+            // for (int i = 0; i < vertices; ++i)
+            //{
+            // cout << "Parent of node " << i << ": " << parent[i] << endl;
+            //}
+
+            // Prompting user into putting their destination
+            int destination;
+            cout << "I'm going to station number: ";
+            cin >> destination;
+
+            // printing the result
+            string path = graph.getPath(startNode, destination, parent);
+            cout << "Shortest Path from station " << startNode << " to station " << destination << ": " << path << endl;
+
+            return 0;
         }
         else
         {
             cout << "\nInput unrecognized";
             continue;
         }
-    }
-
-    return 0;
-
-    // Example usage
-    vector<Vertex> myGraph;
-
-    // Add central station
-    addVertex(myGraph, "Khaerin'ah");
-
-    // Add other stations
-    addVertex(myGraph, "Liyue");
-    addVertex(myGraph, "Snezhnaya");
-    addVertex(myGraph, "Inazuma");
-    addVertex(myGraph, "Celestia");
-    addVertex(myGraph, "Fontaine");
-    addVertex(myGraph, "Sumeru");
-    addVertex(myGraph, "Mondstadt");
-    addVertex(myGraph, "Natlan");
-
-    // Add edges with distances
-    addEdge(myGraph, 0, 1, 8);  // Khaerin'ah to Liyue, distance: 8
-    addEdge(myGraph, 0, 2, 17); // Khaerin'ah to Snezhnaya, distance: 17
-
-    addEdge(myGraph, 3, 1, 9);  // Inazuma to Liyue, distance: 9
-    addEdge(myGraph, 3, 4, 18); // Inazuma to Celestia, distance: 18
-    addEdge(myGraph, 3, 5, 27); // Inazuma to Fontaine, distance: 27
-
-    addEdge(myGraph, 6, 4, 12); // Sumeru to Celestia, distance: 12
-    addEdge(myGraph, 6, 7, 17); // Sumeru to Mondstadt, distance: 17
-    addEdge(myGraph, 6, 0, 27); // Sumeru to Khaerin'ah, distance: 27
-
-    addEdge(myGraph, 8, 7, 10); // Natlan to Mondstadt, distance: 10
-    addEdge(myGraph, 8, 1, 19); // Natlan to Liyue, distance: 19
-    addEdge(myGraph, 8, 6, 28); // Natlan to Sumeru, distance: 28
-
-    addEdge(myGraph, 5, 8, 14); // Fontaine to Natlan, distance: 14
-    addEdge(myGraph, 5, 0, 32); // Fontaine to Khaerin'ah, distance: 32
-    addEdge(myGraph, 5, 3, 44); // Fontaine to Inazuma, distance: 44
-    addEdge(myGraph, 5, 2, 50); // Fontaine to Snezhnaya, distance: 50
-    addEdge(myGraph, 5, 6, 50); // Fontaine to Sumeru, distance: 50
-
-    // Display the graph
-    cout << "Graph after adding routes:\n";
-    // Loop through each vertex in the graph.
-    for (const auto &vertex : myGraph)
-    {
-        cout << "Station: " << vertex.station << ", Neighbors: ";
-        // Loop through each neighbor of the current station.
-        for (const auto &neighbor : vertex.neighbors)
-        {
-            cout << neighbor.first->station << "(" << neighbor.second << ") ";
-        }
-        cout << endl;
-    }
-
-    // Remove a station (optional)
-    removeVertex(myGraph, 1);
-
-    // Display the graph after removal (optional)
-    cout << "\nGraph after removal:\n";
-    // Loop through each vertex in the graph.
-    for (const auto &vertex : myGraph)
-    {
-        cout << "Station: " << vertex.station << ", Neighbors: ";
-        // Loop through each neighbor of the current station.
-        for (const auto &neighbor : vertex.neighbors)
-        {
-            // Print the name of the neighbor station and the distance (edge length) to it.
-            cout << neighbor.first->station << "(" << neighbor.second << ") ";
-        }
-        cout << endl;
-    }
-
-    // Find the shortest path from Khaerin'ah to Celestia
-    unordered_map<string, int> distances = dijkstra(myGraph, 0);
-
-    cout << "\nShortest distances from Khaerin'ah:\n";
-    for (const auto &pair : distances)
-    {
-        cout << pair.first << ": " << pair.second << endl;
     }
 
     return 0;
