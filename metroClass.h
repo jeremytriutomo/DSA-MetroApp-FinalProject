@@ -1,6 +1,7 @@
 #include <iostream>
 #include <iomanip> // For setw
 #include <string>
+#include <vector>
 using namespace std;
 
 // Define the Event structure
@@ -41,6 +42,45 @@ void displaySchedule(Event *head)
         // Move to the next node in the linked list
         current = current->next;
     }
+}
+
+// Function to automatically sort the whole events by departure time if the stations happen to change the schedule
+void sortScheduleByDepartureTime(Event *head)
+{
+    if (head == nullptr || head->next == nullptr)
+    {
+        return; // List is empty or has only one element, already sorted
+    }
+
+    bool swapped;
+    Event *current;
+    Event *last = nullptr;
+
+    do
+    {
+        swapped = false;
+        current = head;
+
+        while (current->next != last)
+        {
+            if (current->departureTime > current->next->departureTime)
+            {
+                swap(current->origin, current->next->origin);
+                swap(current->destination, current->next->destination);
+                swap(current->distanceKm, current->next->distanceKm);
+                swap(current->arrivalTime, current->next->arrivalTime);
+                swap(current->departureTime, current->next->departureTime);
+                swap(current->route, current->next->route);
+
+                swapped = true;
+            }
+
+            current = current->next;
+        }
+
+        last = current;
+
+    } while (swapped);
 }
 
 // Function to add a new event to the schedule

@@ -118,6 +118,7 @@ int main()
         {
             // Display the schedule
             cout << "Schedule:" << endl;
+            sortScheduleByDepartureTime(schedule);
             displaySchedule(schedule);
 
             // Delete the schedule and free memory
@@ -133,8 +134,6 @@ int main()
             continue;
         }
     }
-
-    return 0;
 
     return 0;
 }
