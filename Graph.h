@@ -6,8 +6,8 @@
 #include <string>
 
 using namespace std;
-
-// Constant representing infinity
+// Jeremy's Part
+//  Constant representing infinity
 const int INF = numeric_limits<int>::max();
 
 // Graph Class Definition
