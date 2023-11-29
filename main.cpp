@@ -136,4 +136,85 @@ int main()
     }
 
     return 0;
+
+    // Example usage
+    vector<Vertex> myGraph;
+
+    // Add central station
+    addVertex(myGraph, "Khaerin'ah");
+
+    // Add other stations
+    addVertex(myGraph, "Liyue");
+    addVertex(myGraph, "Snezhnaya");
+    addVertex(myGraph, "Inazuma");
+    addVertex(myGraph, "Celestia");
+    addVertex(myGraph, "Fontaine");
+    addVertex(myGraph, "Sumeru");
+    addVertex(myGraph, "Mondstadt");
+    addVertex(myGraph, "Natlan");
+
+    // Add edges with distances
+    addEdge(myGraph, 0, 1, 8);  // Khaerin'ah to Liyue, distance: 8
+    addEdge(myGraph, 0, 2, 17); // Khaerin'ah to Snezhnaya, distance: 17
+
+    addEdge(myGraph, 3, 1, 9);  // Inazuma to Liyue, distance: 9
+    addEdge(myGraph, 3, 4, 18); // Inazuma to Celestia, distance: 18
+    addEdge(myGraph, 3, 5, 27); // Inazuma to Fontaine, distance: 27
+
+    addEdge(myGraph, 6, 4, 12); // Sumeru to Celestia, distance: 12
+    addEdge(myGraph, 6, 7, 17); // Sumeru to Mondstadt, distance: 17
+    addEdge(myGraph, 6, 0, 27); // Sumeru to Khaerin'ah, distance: 27
+
+    addEdge(myGraph, 8, 7, 10); // Natlan to Mondstadt, distance: 10
+    addEdge(myGraph, 8, 1, 19); // Natlan to Liyue, distance: 19
+    addEdge(myGraph, 8, 6, 28); // Natlan to Sumeru, distance: 28
+
+    addEdge(myGraph, 5, 8, 14); // Fontaine to Natlan, distance: 14
+    addEdge(myGraph, 5, 0, 32); // Fontaine to Khaerin'ah, distance: 32
+    addEdge(myGraph, 5, 3, 44); // Fontaine to Inazuma, distance: 44
+    addEdge(myGraph, 5, 2, 50); // Fontaine to Snezhnaya, distance: 50
+    addEdge(myGraph, 5, 6, 50); // Fontaine to Sumeru, distance: 50
+
+    // Display the graph
+    cout << "Graph after adding routes:\n";
+    // Loop through each vertex in the graph.
+    for (const auto &vertex : myGraph)
+    {
+        cout << "Station: " << vertex.station << ", Neighbors: ";
+        // Loop through each neighbor of the current station.
+        for (const auto &neighbor : vertex.neighbors)
+        {
+            cout << neighbor.first->station << "(" << neighbor.second << ") ";
+        }
+        cout << endl;
+    }
+
+    // Remove a station (optional)
+    removeVertex(myGraph, 1);
+
+    // Display the graph after removal (optional)
+    cout << "\nGraph after removal:\n";
+    // Loop through each vertex in the graph.
+    for (const auto &vertex : myGraph)
+    {
+        cout << "Station: " << vertex.station << ", Neighbors: ";
+        // Loop through each neighbor of the current station.
+        for (const auto &neighbor : vertex.neighbors)
+        {
+            // Print the name of the neighbor station and the distance (edge length) to it.
+            cout << neighbor.first->station << "(" << neighbor.second << ") ";
+        }
+        cout << endl;
+    }
+
+    // Find the shortest path from Khaerin'ah to Celestia
+    unordered_map<string, int> distances = dijkstra(myGraph, 0);
+
+    cout << "\nShortest distances from Khaerin'ah:\n";
+    for (const auto &pair : distances)
+    {
+        cout << pair.first << ": " << pair.second << endl;
+    }
+
+    return 0;
 }
